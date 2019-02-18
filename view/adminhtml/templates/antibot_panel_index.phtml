@@ -1,0 +1,104 @@
+<?php $graph_data = $this->get_logs('graph'); ?>
+<?php $table_data = $this->get_logs('table'); ?>
+<div style="margin:0 0 50px 0;">
+    <span class="title_main"><b>Statistics</b></span><br><br>
+    Status <b><?php if ($auto_prepend == NULL) { ?>
+            <span style="color:green;">Enabled</span>
+        <?php } else { ?>
+            <span style="color:red;">Disabled</span>
+        <?php } ?></b>
+
+    <form action="<?php echo $this->get_dashboard_url() ?>" method="post">
+
+        <input name="form_key" type="hidden" value="<?php echo $this->update_cancel_time(); ?>">
+        <input type="hidden" name="status" value="<?php if ($auto_prepend == 'enable' || $auto_prepend == 'other') {
+            echo "enable";
+        } else {
+            echo "disable";
+        } ?>">
+        <span style="float: right">
+        <button title="On/Off" type="submit" style="background-color: #eb5202; border-color: #eb5202;"
+                class="primary" <?php if ($auto_prepend == 'other') {
+            echo "disabled";
+        } ?>>
+            <span><?php if ($auto_prepend == 'enable' || $auto_prepend == 'other') {
+                    echo "Enable";
+                } else {
+                    echo "Disable";
+                } ?></span>
+        </button>
+        </span>
+        <br><br><br>
+        <span style="float: right"><b>This setting will change server's configuration. Reload the page after 10 seconds
+                to see the changes.</b></span>
+        <?php if ($auto_prepend == 'other') { ?>
+            <br><br><br>
+            <span style="float: right;color:red;">Auto_prepend_file already exists. <a
+                    href="https://www.siteguarding.com/en/contacts" target="_blank">Contact us.</a></span>
+        <?php } ?>
+    </form>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Siteguarding_Antibot/js/dashboard": {
+            <?php $flag = 0;
+    foreach ($graph_data as $key => $value) {
+        $flag++; ?>
+                "<?php echo $key; ?>": {"block": "<?php echo $value['block']?>", "allow": "<?php echo $value['allow']?>"}<?php if ($flag != 7) {
+            echo ",";
+        } ?>
+    <?php } ?>
+        }
+    }
+    }
+</script>
+<div id="curve_chart"></div>
+<div><span class="title_main">Top active bots</span></div>
+<br>
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th width="40%" class="data-grid-th">User Agent</th>
+        <th width="20%" class="data-grid-th">Total Hits</th>
+        <th width="20%" class="data-grid-th">Allowed Hits</th>
+        <th width="20%" class="data-grid-th">Blocked Hits</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if(count($table_data['bots'])){
+    foreach($table_data['bots'] as $useragent => $data){?>
+        <tr>
+            <td><?php echo $useragent; ?></td>
+            <td><?php echo $data['total']; ?></td>
+            <td><?php echo $data['active']; ?></td>
+            <td><?php echo $data['block']; ?></td>
+        </tr>
+    <?php } } ?>
+    </tbody>
+</table>
+<br>
+<div><span class="title_main">Top bot visited pages</span></div>
+<br>
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th width="40%" class="data-grid-th">URL</th>
+        <th width="20%" class="data-grid-th">Total Hits</th>
+        <th width="20%" class="data-grid-th">Allowed Hits</th>
+        <th width="20%" class="data-grid-th">Blocked Hits</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if(count($table_data['pages'])){
+        foreach($table_data['pages'] as $url => $data){?>
+            <tr>
+                <td><?php echo $url; ?></td>
+                <td><?php echo $data['total']; ?></td>
+                <td><?php echo $data['active']; ?></td>
+                <td><?php echo $data['block']; ?></td>
+            </tr>
+        <?php } } ?>
+    </tbody>
+</table>
+

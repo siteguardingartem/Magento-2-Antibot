@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add 
+            id="Siteguarding_Antibot::parent" 
+            title="Antibot" 
+            module="Siteguarding_Antibot" 
+            sortOrder="100" 
+            resource="Siteguarding_Antibot::parent"
+        />
+        <add 
+            id="Siteguarding_Antibot::panel" 
+            title="Dashboard" 
+            module="Siteguarding_Antibot" 
+            sortOrder="5" 
+            action="antibot/panel" 
+            resource="Siteguarding_Antibot::panel" 
+            parent="Siteguarding_Antibot::parent"
+        />
+        <add 
+            id="Siteguarding_Antibot::settings" 
+            title="Settings" 
+            module="Siteguarding_Antibot" 
+            sortOrder="10" 
+            action="antibot/settings" 
+            resource="Siteguarding_Antibot::settings" 
+            parent="Siteguarding_Antibot::parent"
+        />
+    </menu>
+</config>

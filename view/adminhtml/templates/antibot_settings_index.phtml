@@ -1,0 +1,25 @@
+<?php $data = $this->get_config(); ?>
+<form action="<?php echo $this->get_dashboard_url() ?>" method="post">
+    <div><h2><b>Allowed Bots</b></h2></div>
+    <textarea name="allowed_bots" class="textarea_main"><?php echo $data['allowed_bots']; ?></textarea>
+
+    <div>Bot name per line. <b>Format:</b> Signature from Useragent|Array of PTR records and/or IPs addresses separated
+        by comma (see example above) <b>Don't remove default records.</b></div>
+    <br>
+
+    <div><h2><b>Allowed IP addresses</b></h2></div>
+    <textarea name="allowed_ip" class="textarea_main"><?php echo $data['allowed_ip']; ?></textarea>
+
+    <div>IP address per line. <b>Possible masks:</b> 100.100.100.100 or 100.100.100.* or 100.100.*.* (see example
+        above) <b>Don't remove default records.</b></div>
+    <br>
+
+    <div><h2><b>Blocked IP addresses</b></h2></div>
+    <textarea name="blocked_ip" class="textarea_main"><?php echo $data['blocked_ip']; ?></textarea>
+
+    <div>IP address per line. <b>Possible masks:</b> 100.100.100.100 or 100.100.100.* or 100.100.*.* or (see example
+        above) <b>Don't remove default records.</b></div>
+    <br>
+    <input name="form_key" type="hidden" value="<?php echo $this->update_cancel_time(); ?>">
+    <button class="primary" type="submit">Save</button>
+</form>
